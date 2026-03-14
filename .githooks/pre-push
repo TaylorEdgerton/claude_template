@@ -1,0 +1,14 @@
+#!/bin/bash
+# Check that task tracking is up to date before pushing
+
+if [ -f "tasks/current.md" ]; then
+    if grep -q "\- \[ \]" tasks/current.md; then
+        echo ""
+        echo "⚠  tasks/current.md still has unchecked items."
+        echo "   Continue pushing? (y/n)"
+        read -r response
+        if [ "$response" != "y" ]; then
+            exit 1
+        fi
+    fi
+fi

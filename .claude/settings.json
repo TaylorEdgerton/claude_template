@@ -1,0 +1,33 @@
+{
+  "model": "opusplan",
+  "effortLevel": "high",
+  "alwaysThinkingEnabled": true,
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(wc *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Edit(src/**)",
+      "Edit(docs/**)",
+      "Edit(tasks/**)",
+      "Edit(issues/**)",
+      "Edit(CLAUDE.md)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)"
+    ]
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "type": "command",
+        "command": "bash .claude/hooks/context-reminder.sh"
+      }
+    ]
+  }
+}
