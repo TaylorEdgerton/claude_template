@@ -1,10 +1,21 @@
 #!/bin/bash
 set -e
 
+# Navigate to repo root
+cd "$(dirname "$0")/.."
+
 echo "=== Project Setup ==="
 read -p "Project name: " PROJECT_NAME
 read -p "Short description: " DESCRIPTION
 read -p "Primary stack (e.g. java/ignition, python/fastapi): " STACK
+read -p "New git remote URL (leave blank to skip): " REMOTE_URL
+
+# Repoint git remote
+if [ -n "$REMOTE_URL" ]; then
+    git remote remove origin 2>/dev/null || true
+    git remote add origin "$REMOTE_URL"
+    echo "Remote set to: $REMOTE_URL"
+fi
 
 # Update CLAUDE.md
 sed -i "s/\[Name\]/$PROJECT_NAME/g" CLAUDE.md
@@ -14,11 +25,19 @@ sed -i "s/\[Language\/framework\]/$STACK/g" CLAUDE.md
 # Update README
 sed -i "s/\[Project Name\]/$PROJECT_NAME/g" README.md
 
-# Initialise git if not already
-if [ ! -d ".git" ]; then
-    git init
-    git add -A
-    git commit -m "init: scaffold from project-template"
+# Clean template history and start fresh
+git checkout --orphan fresh
+git add -A
+git commit -m "init: $PROJECT_NAME from project-template"
+git branch -D main 2>/dev/null || true
+git branch -m main
+
+# Push if remote was set
+if [ -n "$REMOTE_URL" ]; then
+    read -p "Push to remote? (y/n): " PUSH
+    if [ "$PUSH" = "y" ]; then
+        git push -u origin main
+    fi
 fi
 
 echo ""
