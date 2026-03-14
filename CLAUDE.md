@@ -9,6 +9,9 @@
 ## Architecture
 See docs/architecture.md for full reference.
 
+## Reference Documentation
+See docs/references.md
+
 ## Conventions
 - Commit after each completed phase
 - Use tasks/current.md as the single source of truth for active work
