@@ -21,11 +21,39 @@ After setup, fill in the remaining scaffolding:
 
 ## Workflow
 
-The workflow is command-driven and revolves around a single active task file (`tasks/current.md`). Every task follows the same lifecycle: select, research, plan, implement, checkpoint, and wrap up.
+The workflow revolves around `docs/backlog.md`. The backlog is the single intake point for all work -- every task begins as a user story there before it becomes active.
+
+### Populating the Backlog
+
+User stories can be generated through any chat interface (ChatGPT, Claude, Copilot Chat, etc.). Use a rubber-ducky or brainstorming conversation to think through requirements, then paste the resulting stories into `docs/backlog.md` using the standard template:
+
+```
+### US-NNN: [Story title]
+
+**As a** [user type]
+**I want** [capability]
+**So that** [benefit]
+
+**Acceptance criteria:**
+- [ ] [criterion]
+```
+
+Stories are prioritised top-to-bottom in the Backlog section. When ready to start work, either:
+
+- **Use `/start-task`** -- it reads the backlog and offers the next story from the top.
+- **Pick manually** -- move any story directly into the In Progress section of the backlog, then copy it into `tasks/current.md` yourself.
+
+Either path leads into the same implementation lifecycle: research, plan, implement, checkpoint, and wrap up.
+
+### Task Lifecycle
 
 ```mermaid
 flowchart TD
-    A["/start-task"] --> B["Select story from docs/backlog.md"]
+    S["Brainstorm / rubber-ducky\nin any chat interface"] --> T["Add story to docs/backlog.md"]
+    T --> U{"How to start?"}
+    U -- "/start-task\n(picks from top)" --> B["Select story from docs/backlog.md"]
+    U -- "Manual pick" --> V["Move chosen story\nto In Progress"]
+    V --> C
     B --> C["Copy story into tasks/current.md"]
     C --> D{Research first?}
     D -- Yes --> E["/research"]
