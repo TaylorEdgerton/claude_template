@@ -10,6 +10,7 @@ Write your findings into tasks/current.md under a "## Research" section. Include
 - List of relevant files with brief descriptions
 - Current patterns the implementation should follow
 - Constraints or gotchas discovered
-- Any open questions for me
+- Record open questions for me 
+- try and answer them first critically so I can review the answers
 
 Do NOT propose solutions yet. Just document what exists.
